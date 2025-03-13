@@ -22,5 +22,10 @@
 #define LAMPEGGIANTE "\033[5m"
 #define INVERSIONE "\033[7m"
 
+void UniformaString(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = (char)tolower((unsigned char)str[i]);
+    }
+}
 
 #endif
