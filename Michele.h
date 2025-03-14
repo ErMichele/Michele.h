@@ -31,13 +31,13 @@ void UniformaString(char *str) {
     }
 }
 
-double RadiceQuadrata(double y) { 
-    double Corrente = y; 
+double RadiceQuadrata(double Numero) { 
+    double Corrente = Numero; 
     double Next; 
     double Delta = 1; 
      
     while (Delta > 1E-6) { 
-        Next =  - (Corrente * Corrente - y) / (2 * Corrente); 
+        Next =  - (Corrente * Corrente - Numero) / (2 * Corrente); 
         Delta = Corrente - Next; 
         if (Delta < 0) Delta = -Delta; 
         Corrente = Next; 
