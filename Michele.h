@@ -31,19 +31,19 @@ void UniformaString(char *str) {
     }
 }
 
-double squareRoot(double y) { 
-    double current = y; 
-    double next; 
-    double delta = 1; 
+double RadiceQuadrata(double y) { 
+    double Corrente = y; 
+    double Next; 
+    double Delta = 1; 
      
-    while (delta > 1E-6) { 
-        next = current - (current * current - y) / (2 * current); 
-        delta = current - next; 
-        if (delta < 0) delta = -delta; 
-        current = next; 
+    while (Delta > 1E-6) { 
+        Next =  - (Corrente * Corrente - y) / (2 * Corrente); 
+        Delta = Corrente - Next; 
+        if (Delta < 0) Delta = -Delta; 
+        Corrente = Next; 
     } 
      
-    return next; 
+    return Next; 
 } 
 
 #endif
