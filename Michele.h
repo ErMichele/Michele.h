@@ -25,6 +25,25 @@
 #define LAMPEGGIANTE "\033[5m"
 #define INVERSIONE "\033[7m"
 
+struct Grandezza_Fisica {
+    float Valore;
+    float Incertezza;
+};
+
+struct Grandezza_Fisica Somma_Fisica (struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
+    struct Grandezza_Fisica Grandezza_Risultato;
+    Grandezza_Risultato.Valore = Grandezza_1.Valore + Grandezza_2.Valore;
+    Grandezza_Risultato.Incertezza = Grandezza_1.Incertezza + Grandezza_2.Incertezza;
+    return Grandezza_Risultato;
+}
+
+struct Grandezza_Fisica Differenza_Fisica (struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
+    struct Grandezza_Fisica Grandezza_Risultato;
+    Grandezza_Risultato.Valore = Grandezza_1.Valore - Grandezza_2.Valore;
+    Grandezza_Risultato.Incertezza = Grandezza_1.Incertezza - Grandezza_2.Incertezza;
+    return Grandezza_Risultato;
+}
+
 void UniformaString(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = (char)tolower((unsigned char)str[i]);
