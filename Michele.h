@@ -1,6 +1,9 @@
 #ifndef MICHELE_H
 #define MICHELE_H
 
+#include <windows.h>
+#include <stdio.h>
+
 #define RESET "\033[0m"
 
 //COLORI TESTO
@@ -27,5 +30,20 @@ void UniformaString(char *str) {
         str[i] = (char)tolower((unsigned char)str[i]);
     }
 }
+
+double squareRoot(double y) { 
+    double current = y; 
+    double next; 
+    double delta = 1; 
+     
+    while (delta > 1E-6) { 
+        next = current - (current * current - y) / (2 * current); 
+        delta = current - next; 
+        if (delta < 0) delta = -delta; 
+        current = next; 
+    } 
+     
+    return next; 
+} 
 
 #endif
