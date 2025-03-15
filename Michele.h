@@ -38,8 +38,8 @@
  * @brief Structure to represent physical quantities with value and uncertainty
  */
 struct Grandezza_Fisica {
-    float Valore;      /**< Value of the physical quantity */
-    float Incertezza;  /**< Uncertainty associated with the physical quantity */
+    float Valore;      /** Value of the physical quantity */
+    float Incertezza;  /** Uncertainty associated with the physical quantity */
 };
 
 // =====================================================================================
