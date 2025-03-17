@@ -1,7 +1,6 @@
 #ifndef MICHELE_H
 #define MICHELE_H
 
-#include <windows.h>
 #include <stdio.h>
 #include <ctype.h>
 
@@ -102,6 +101,27 @@ struct Grandezza_Fisica Divisione_Fisica(struct Grandezza_Fisica Grandezza_1, st
     return Grandezza_Risultato;
 }
 
+/**
+ * @brief 
+ * 
+ * @param Grandezza 
+ * @param Esponente 
+ * @return struct Grandezza_Fisica 
+ */
+struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Esponente) {
+    struct Grandezza_Fisica Grandezza_Risultato = Grandezza;
+    if (Esponente > 0) {
+        for (int i = 1; i < Esponente; i++) {
+            Grandezza_Risultato.Valore *= Grandezza.Valore;
+            Grandezza_Risultato.Incertezza = Grandezza_Risultato.Valore * ((Grandezza.Incertezza / Grandezza.Valore) + (Grandezza.Incertezza / Grandezza.Valore));
+        }
+    } else if (Esponente == 0) {
+        Grandezza_Risultato.Valore = 0;
+        Grandezza_Risultato.Incertezza = 0;
+    }
+    return Grandezza_Risultato;
+}
+
 // =====================================================================================
 // Utility Functions
 // =====================================================================================
@@ -112,7 +132,7 @@ struct Grandezza_Fisica Divisione_Fisica(struct Grandezza_Fisica Grandezza_1, st
  * @param str String to convert
  */
 void UniformaString(char *str) {
-    if (str == NULL || str[0] == '\0') return; // Check for null or empty string
+    if (str == NULL || str[0] == '\0') return;
     for (int i = 0; str[i]; i++) {
         str[i] = (char)tolower((unsigned char)str[i]);
     }
