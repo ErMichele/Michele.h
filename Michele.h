@@ -41,6 +41,15 @@ struct Grandezza_Fisica {
     float Incertezza;  /** Uncertainty associated with the physical quantity */
 };
 
+/**
+ * @brief Structure to represent the solutions of a quadratic equation.
+ * 
+ */
+struct Soluzioni_Secondo_Grado {
+    double Soluzione_Più; /** Positive solution (root) of the quadratic equation. */
+    double Soluzione_Meno;  /** Negative solution (root) of the quadratic equation. */
+};
+
 // =====================================================================================
 // Mathematical Operations on Physical Quantities
 // =====================================================================================
@@ -123,20 +132,8 @@ struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Es
 }
 
 // =====================================================================================
-// Utility Functions
+// Advanced Mathematical Operations
 // =====================================================================================
-
-/**
- * @brief Converts a string to lowercase for comparison purposes.
- * 
- * @param str String to convert
- */
-void UniformaString(char *str) {
-    if (str == NULL || str[0] == '\0') return;
-    for (int i = 0; str[i]; i++) {
-        str[i] = (char)tolower((unsigned char)str[i]);
-    }
-}
 
 /**
  * @brief Calculates the square root of a number using Newton's method.
@@ -162,6 +159,47 @@ double RadiceQuadrata(double Numero) {
     }
 
     return Next;
+}
+
+/**
+ * @brief Solves a quadratic equation of the form Ax^2 + Bx + C = 0.
+ * 
+ * @param A The quadratic coefficient (must be non-zero).
+ * @param B The linear coefficient.
+ * @param C The constant term.
+ * @return struct Soluzioni A structure containing the two solutions
+ */
+struct Soluzioni_Secondo_Grado Formula_Quadratica (double A, double B, double C) {
+    struct Soluzioni_Secondo_Grado Risultati;
+    double Discriminante = (B * B) - (4 * A * C);
+
+    if (Discriminante > 0) {
+        Risultati.Soluzione_Più = (-B + RadiceQuadrata(Discriminante)) / (2 * A);
+        Risultati.Soluzione_Meno = (-B - RadiceQuadrata(Discriminante)) / (2 * A);
+    } else if (Discriminante == 0) {
+        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -B / (2 * A);
+    } else {
+        printf("Errore: discriminante negativo per numeri (A = %lf, B = %lf, C = %lf)!\n", A, B, C);
+        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -1.0; // Valori indicativi di errore
+    }
+
+    return Risultati;
+}
+
+// =====================================================================================
+// Utility Functions
+// =====================================================================================
+
+/**
+ * @brief Converts a string to lowercase for comparison purposes.
+ * 
+ * @param str String to convert
+ */
+void UniformaString(char *str) {
+    if (str == NULL || str[0] == '\0') return;
+    for (int i = 0; str[i]; i++) {
+        str[i] = (char)tolower((unsigned char)str[i]);
+    }
 }
 
 #endif
