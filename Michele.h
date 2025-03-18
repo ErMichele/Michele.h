@@ -43,7 +43,6 @@ struct Grandezza_Fisica {
 
 /**
  * @brief Structure to represent the solutions of a quadratic equation.
- * 
  */
 struct Soluzioni_Secondo_Grado {
     double Soluzione_Più; /** Positive solution (root) of the quadratic equation. */
@@ -180,7 +179,7 @@ struct Soluzioni_Secondo_Grado Formula_Quadratica (double A, double B, double C)
         Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -B / (2 * A);
     } else {
         printf("Errore: discriminante negativo per numeri (A = %lf, B = %lf, C = %lf)!\n", A, B, C);
-        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -1.0; // Valori indicativi di errore
+        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -1.0;
     }
 
     return Risultati;
