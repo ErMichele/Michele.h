@@ -102,11 +102,11 @@ struct Grandezza_Fisica Divisione_Fisica(struct Grandezza_Fisica Grandezza_1, st
 }
 
 /**
- * @brief Elevates at a certain power a physical quantities, condifering their uncertainties.
+ * @brief Raises a physical quantity to a specified power, taking uncertainties into account.
  * 
- * @param Grandezza The physical quantity
- * @param Esponente The esponent of the power set
- * @return struct Grandezza_Fisica Resulting physical quantity from the power set
+ * @param Grandezza The physical quantity to be raised.
+ * @param Esponente The exponent to which the quantity is raised.
+ * @return struct Grandezza_Fisica The resulting physical quantity after applying the power.
  */
 struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Esponente) {
     struct Grandezza_Fisica Grandezza_Risultato = Grandezza;
@@ -116,7 +116,7 @@ struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Es
             Grandezza_Risultato.Incertezza = Grandezza_Risultato.Valore * ((Grandezza.Incertezza / Grandezza.Valore) + (Grandezza.Incertezza / Grandezza.Valore));
         }
     } else if (Esponente == 0) {
-        Grandezza_Risultato.Valore = 0;
+        Grandezza_Risultato.Valore = 1;
         Grandezza_Risultato.Incertezza = 0;
     }
     return Grandezza_Risultato;
