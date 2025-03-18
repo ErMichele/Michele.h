@@ -186,6 +186,34 @@ struct Soluzioni_Secondo_Grado Formula_Quadratica (double A, double B, double C)
     return Risultati;
 }
 
+#include <stdio.h>
+
+/**
+ * @brief Calculates the n-th Fibonacci number.
+ * 
+ * @param n The position of the Fibonacci number to calculate.
+ * @return int The Fibonacci number at position n.
+ */
+int Fibonacci_Numero(int n) {
+    if (n <= 0) {
+        printf("Errore: n deve essere un numero positivo.\n");
+        return -1;
+    }
+    if (n == 1) return 0;
+    if (n == 2) return 1;
+
+    int Valore_1 = 0, Valore_2 = 1, Risultato = 0;
+
+    for (int i = 3; i <= n; i++) {
+        Risultato = Valore_1 + Valore_2;
+        Valore_1 = Valore_2;
+        Valore_2 = Risultato;
+    }
+
+    return Risultato;
+}
+
+
 // =====================================================================================
 // Utility Functions
 // =====================================================================================
