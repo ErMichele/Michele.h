@@ -44,7 +44,7 @@ struct Grandezza_Fisica {
 /**
  * @brief Structure to represent the solutions of a quadratic equation.
  */
-struct Soluzioni_Secondo_Grado {
+struct Soluzioni_Quadratica {
     double Soluzione_Più; /** Positive solution (root) of the quadratic equation. */
     double Soluzione_Meno;  /** Negative solution (root) of the quadratic equation. */
 };
@@ -168,8 +168,8 @@ double RadiceQuadrata(double Numero) {
  * @param C The constant term.
  * @return struct Soluzioni A structure containing the two solutions
  */
-struct Soluzioni_Secondo_Grado Formula_Quadratica (double A, double B, double C) {
-    struct Soluzioni_Secondo_Grado Risultati;
+struct Soluzioni_Quadratica Formula_Quadratica (double A, double B, double C) {
+    struct Soluzioni_Quadratica Risultati;
     double Discriminante = (B * B) - (4 * A * C);
 
     if (Discriminante > 0) {
@@ -184,8 +184,6 @@ struct Soluzioni_Secondo_Grado Formula_Quadratica (double A, double B, double C)
 
     return Risultati;
 }
-
-#include <stdio.h>
 
 /**
  * @brief Calculates the n-th Fibonacci number.
@@ -211,7 +209,6 @@ int Fibonacci_Numero(int n) {
 
     return Risultato;
 }
-
 
 // =====================================================================================
 // Utility Functions
