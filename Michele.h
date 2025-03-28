@@ -229,13 +229,13 @@ void UniformaString(char *str) {
 }
 
 /**
- * @brief 
+ * @brief Logs a formatted message with a timestamp and log type to both the console and a file.
  * 
- * @param level 
- * @param format 
- * @param ... 
+ * @param Tipo Log type/category (e.g., "INFO", "ERROR").
+ * @param Messaggio Format string for the log message.
+ * @param ... Arguments to format the message.
  */
-void log_message(const char *Tipo, const char *Messaggio, ...) {
+void Logging(const char *Tipo, const char *Messaggio, ...) {
     char timestamp[20];
     time_t now = time(NULL);
     struct tm *local_time = localtime(&now);
