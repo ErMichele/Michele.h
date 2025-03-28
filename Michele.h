@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdarg.h>
 
 // =====================================================================================
 // Console Text Formatting Macros
@@ -227,7 +228,43 @@ void UniformaString(char *str) {
     }
 }
 
-void Logging (int Livello, char Messaggio[]) {
+/**
+ * @brief 
+ * 
+ * @param level 
+ * @param format 
+ * @param ... 
+ */
+void log_message(const char *Tipo, const char *Messaggio, ...) {
+    char timestamp[20];
+    time_t now = time(NULL);
+    struct tm *local_time = localtime(&now);
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", local_time);
 
+    // Aprire il file di log in modalità append
+    FILE *log_file = fopen("logs.log", "a");
+    if (!log_file) {
+        // Prova ad aprire il file in modalità scrittura se non esiste
+        log_file = fopen("logs.log", "w");
+        if (!log_file) {
+            printf("Errore nell'apertura del file di log");
+            return;
+        }
+    }
+
+    va_list args;
+    va_start(args, Messaggio);
+
+    fprintf(stdout, "<%s> [%s] ", timestamp, Tipo);
+    vfprintf(stdout, Messaggio, args);
+    fprintf(stdout, "\n");
+
+    fprintf(log_file, "<%s> [%s] ", timestamp, Tipo);
+    vfprintf(log_file, Messaggio, args);
+    fprintf(log_file, "\n");
+
+    va_end(args);
+    fclose(log_file);
 }
+
 #endif

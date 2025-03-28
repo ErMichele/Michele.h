@@ -1,3 +1,6 @@
+/* 
+*/
+
 #include "../Michele.h"
 
 int main () {
@@ -6,5 +9,5 @@ int main () {
     struct Soluzioni_Quadratica Soluzioni = Formula_Quadratica(A, B, C);
     int Radice = RadiceQuadrata(A);
     int Fibonacci = Fibonacci_Numero(B);
-    printf("%d, %d, %.02lf, %.02lf", Radice, Fibonacci, Soluzioni.Soluzione_Meno, Soluzioni.Soluzione_Più);
+    printf("After all the operations, we get:\nThe solutions to the quadratic formula are %.02lf and %.02lf;\nThe square root is %.02lf;\nThe %dth fibonacci number is %d.", Soluzioni.Soluzione_Più, Soluzioni.Soluzione_Meno, Radice, B, Fibonacci);
 }
