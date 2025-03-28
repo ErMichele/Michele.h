@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <time.h>
 
 // =====================================================================================
 // Console Text Formatting Macros
@@ -226,4 +227,7 @@ void UniformaString(char *str) {
     }
 }
 
+void Logging (int Livello, char Messaggio[]) {
+
+}
 #endif

@@ -3,8 +3,6 @@ The code creates two physical quantities with predefined values and uncertaintie
 It then performs various operations (sum, subtraction, multiplication, division, and power) 
 and prints the resulting values and uncertainties in a readable format to the terminal. */
 
-
-#include <stdio.h>
 #include "../Michele.h"
 
 int main () {
