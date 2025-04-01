@@ -55,12 +55,22 @@ struct Soluzioni_Quadratica {
 // Advanced Mathematical Operations
 // =====================================================================================
 
+double Potenza (double numero, int esponente) {
+    double risultato = 1;
+    if (esponente > 0) {
+        for (int i = 1; i < esponente; i++) {
+            risultato *= numero;
+        }
+    }
+    return risultato;
+}
+
 /**
  * @brief Computes the n-th root of a number using Newton's method.
  * 
- * @param number The number whose n-th root is to be calculated.
- * @param index The root index (e.g., 2 for square root, 3 for cube root, etc.).
- * @param tolerance The acceptable tolerance for the result, indicating the desired level of precision.
+ * @param numero The number whose n-th root is to be calculated.
+ * @param indice The root index (e.g., 2 for square root, 3 for cube root, etc.).
+ * @param tolleranza The acceptable tolerance for the result, indicating the desired level of precision.
  * 
  * @return double The calculated n-th root. Returns -1 in case of an error (e.g., even root of a negative number).
  */
