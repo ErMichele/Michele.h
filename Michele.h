@@ -39,8 +39,8 @@
  * @brief Structure to represent physical quantities with value and uncertainty
  */
 struct Grandezza_Fisica {
-    float Valore;      /** Value of the physical quantity */
-    float Incertezza;  /** Uncertainty associated with the physical quantity */
+    double Valore;      /** Value of the physical quantity */
+    double Incertezza;  /** Uncertainty associated with the physical quantity */
 };
 
 /**
@@ -50,6 +50,92 @@ struct Soluzioni_Quadratica {
     double Soluzione_Più; /** Positive solution (root) of the quadratic equation. */
     double Soluzione_Meno;  /** Negative solution (root) of the quadratic equation. */
 };
+
+// =====================================================================================
+// Advanced Mathematical Operations
+// =====================================================================================
+
+/**
+ * @brief Computes the n-th root of a number using Newton's method.
+ * 
+ * @param number The number whose n-th root is to be calculated.
+ * @param index The root index (e.g., 2 for square root, 3 for cube root, etc.).
+ * @param tolerance The acceptable tolerance for the result, indicating the desired level of precision.
+ * 
+ * @return double The calculated n-th root. Returns -1 in case of an error (e.g., even root of a negative number).
+ */
+double Radice(double numero, int indice, double tolleranza) {
+    if (numero < 0 && indice % 2 == 0) {
+        return -1;
+        printf("Errore: il radicando %0.4lf è negativo e l'indice %d è un numero pari.", numero, indice);
+    }
+    double x = numero / indice; // Stima iniziale
+    double differenza;
+    do {
+        double potenza = 1;
+        for (int i = 1; i < indice; i++) {
+            potenza *= x;
+        }
+        // Formula di Newton
+        double nuovo_x = ((indice - 1) * x + numero / potenza) / indice;
+        differenza = nuovo_x - x;
+        if (differenza < 0) {
+            differenza = -differenza;
+        }
+        x = nuovo_x;
+    } while (differenza > tolleranza);
+    return x;
+}
+
+/**
+ * @brief Solves a quadratic equation of the form Ax^2 + Bx + C = 0.
+ * 
+ * @param A The quadratic coefficient (must be non-zero).
+ * @param B The linear coefficient.
+ * @param C The constant term.
+ * @return struct Soluzioni A structure containing the two solutions
+ */
+struct Soluzioni_Quadratica Formula_Quadratica (double A, double B, double C) {
+    struct Soluzioni_Quadratica Risultati;
+    double Discriminante = (B * B) - (4 * A * C);
+
+    if (Discriminante > 0) {
+        Risultati.Soluzione_Più = (-B + Radice(Discriminante, 2, 0.0001)) / (2 * A);
+        Risultati.Soluzione_Meno = (-B - Radice(Discriminante, 2, 0.0001)) / (2 * A);
+    } else if (Discriminante == 0) {
+        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -B / (2 * A);
+    } else {
+        printf("Errore: discriminante negativo per numeri (A = %lf, B = %lf, C = %lf)!\n", A, B, C);
+        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -1.0;
+    }
+
+    return Risultati;
+}
+
+/**
+ * @brief Calculates the n-th Fibonacci number.
+ * 
+ * @param n The position of the Fibonacci number to calculate.
+ * @return int The Fibonacci number at position n.
+ */
+int Fibonacci_Numero(int n) {
+    if (n <= 0) {
+        printf("Errore: n deve essere un numero positivo.\n");
+        return -1;
+    }
+    if (n == 1) return 0;
+    if (n == 2) return 1;
+
+    int Valore_1 = 0, Valore_2 = 1, Risultato = 0;
+
+    for (int i = 3; i <= n; i++) {
+        Risultato = Valore_1 + Valore_2;
+        Valore_1 = Valore_2;
+        Valore_2 = Risultato;
+    }
+
+    return Risultato;
+}
 
 // =====================================================================================
 // Mathematical Operations on Physical Quantities
@@ -132,84 +218,18 @@ struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Es
     return Grandezza_Risultato;
 }
 
-// =====================================================================================
-// Advanced Mathematical Operations
-// =====================================================================================
-
 /**
- * @brief Calculates the square root of a number using Newton's method.
+ * @brief Calculates the n-th root of a physical quantity, considering its uncertainty.
  * 
- * @param Numero The number to calculate the square root of
- * @return double The square root of the number
+ * @param Grandezza The physical quantity whose n-th root is to be calculated.
+ * @param Indice The root index (e.g., 2 for square root, 3 for cube root, etc.).
+ * @return struct Grandezza_Fisica The resulting physical quantity after applying the n-th root operation.
  */
-double RadiceQuadrata(double Numero) {
-    if (Numero < 0) {
-        printf("Errore: numero negativo per radice quadrata (input: %f)!\n", Numero);
-        return -1;
-    }
-
-    double Corrente = Numero;
-    double Next;
-    double Delta = 1;
-
-    while (Delta > 1E-6) { 
-        Next = Corrente - (Corrente * Corrente - Numero) / (2 * Corrente);
-        Delta = Corrente - Next;
-        if (Delta < 0) Delta = -Delta;
-        Corrente = Next;
-    }
-
-    return Next;
-}
-
-/**
- * @brief Solves a quadratic equation of the form Ax^2 + Bx + C = 0.
- * 
- * @param A The quadratic coefficient (must be non-zero).
- * @param B The linear coefficient.
- * @param C The constant term.
- * @return struct Soluzioni A structure containing the two solutions
- */
-struct Soluzioni_Quadratica Formula_Quadratica (double A, double B, double C) {
-    struct Soluzioni_Quadratica Risultati;
-    double Discriminante = (B * B) - (4 * A * C);
-
-    if (Discriminante > 0) {
-        Risultati.Soluzione_Più = (-B + RadiceQuadrata(Discriminante)) / (2 * A);
-        Risultati.Soluzione_Meno = (-B - RadiceQuadrata(Discriminante)) / (2 * A);
-    } else if (Discriminante == 0) {
-        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -B / (2 * A);
-    } else {
-        printf("Errore: discriminante negativo per numeri (A = %lf, B = %lf, C = %lf)!\n", A, B, C);
-        Risultati.Soluzione_Più = Risultati.Soluzione_Meno = -1.0;
-    }
-
-    return Risultati;
-}
-
-/**
- * @brief Calculates the n-th Fibonacci number.
- * 
- * @param n The position of the Fibonacci number to calculate.
- * @return int The Fibonacci number at position n.
- */
-int Fibonacci_Numero(int n) {
-    if (n <= 0) {
-        printf("Errore: n deve essere un numero positivo.\n");
-        return -1;
-    }
-    if (n == 1) return 0;
-    if (n == 2) return 1;
-
-    int Valore_1 = 0, Valore_2 = 1, Risultato = 0;
-
-    for (int i = 3; i <= n; i++) {
-        Risultato = Valore_1 + Valore_2;
-        Valore_1 = Valore_2;
-        Valore_2 = Risultato;
-    }
-
-    return Risultato;
+struct Grandezza_Fisica Radice_Fisica(struct Grandezza_Fisica Grandezza, int Indice) {
+    struct Grandezza_Fisica Grandezza_Risultato;
+    Grandezza_Risultato.Valore = Radice(Grandezza.Valore, Indice, 0.00001);
+    Grandezza_Risultato.Incertezza = Grandezza.Incertezza * (1.0 / Indice) * (1.0 / Grandezza_Risultato.Valore);
+    return Grandezza_Risultato;
 }
 
 // =====================================================================================
