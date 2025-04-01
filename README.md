@@ -1,55 +1,92 @@
-# Michele.h
+# Michele.h Library Documentation
 
-**Michele.h** is a powerful and flexible library for the C programming language that simplifies advanced computations, enhances console output, and facilitates operations with physical quantities. Built with clarity and efficiency in mind, it’s an essential tool for scientific applications, mathematical explorations, and general-purpose programming.
+**Michele.h** is a powerful and flexible library designed for C programming. It simplifies advanced computations, enhances console output, and facilitates operations with physical quantities. With its clear and efficient design, **Michele.h** is an essential tool for scientific applications, mathematical explorations, and general-purpose programming.
 
 ---
 
 ## Features Overview
 
 ### **1. Console Text Formatting**
-Take your terminal output to the next level with customizable and colorful text:
-- **Text Colors**: Add vibrancy with macros like `ROSSO` (Red), `VERDE` (Green), `GIALLO` (Yellow), and `CIANO` (Cyan).
-- **Background Colors**: Create contrast using background macros such as `S_ROSSO` (Red Background) and `S_BLU` (Blue Background).
-- **Text Styles**: Emphasize text with macros like `GRASSETTO` (Bold), `SOTTOLINEATO` (Underline), `LAMPEGGIANTE` (Blinking), and `INVERSIONE` (Inverted Text).
+Enhance your terminal output with customizable and vibrant text:
+
+- **Text Colors**: Add color to your terminal output with macros:
+  - `ROSSO`: Red text color.
+  - `VERDE`: Green text color.
+  - `GIALLO`: Yellow text color.
+  - `BLU`: Blue text color.
+  - `CIANO`: Cyan text color.
+
+- **Background Colors**: Create contrast with background colors:
+  - `S_ROSSO`: Red background color.
+  - `S_VERDE`: Green background color.
+  - `S_GIALLO`: Yellow background color.
+  - `S_BLU`: Blue background color.
+
+- **Text Styles**: Emphasize your messages using text styles:
+  - `GRASSETTO`: Bold text style.
+  - `SOTTOLINEATO`: Underlined text style.
+  - `LAMPEGGIANTE`: Blinking text style.
+  - `INVERSIONE`: Inverted text style.
+
+- **Reset Formatting**: Reset to default formatting using:
+  - `RESET`: Resets text formatting to default.
 
 ---
 
 ### **2. Mathematical Operations on Physical Quantities**
-Perform accurate calculations on physical quantities with uncertainties:
-- **Physical Quantity Structure (`Grandezza_Fisica`)**: Define quantities with a value (`Valore`) and uncertainty (`Incertezza`).
+Easily perform operations on physical quantities while considering their uncertainties:
+
+- **Physical Quantity Structure (`Grandezza_Fisica`)**: Define quantities that include both a value (`Valore`) and an uncertainty (`Incertezza`).
+
 - **Supported Operations**:
-  - **Addition & Subtraction**: Propagate uncertainties accurately with `Somma_Fisica` and `Differenza_Fisica`.
-  - **Multiplication & Division**: Handle uncertainties in product and ratio calculations using `Prodotto_Fisica` and `Divisione_Fisica`.
-  - **Power & Root**: Use `Potenza_Fisica` to elevate quantities to any power or `Radice_Fisica` to compute the n-th root, both with precise uncertainty propagation.
+  - **Addition & Subtraction**: Accurately propagate uncertainties using `Somma_Fisica` and `Differenza_Fisica`.
+  - **Multiplication & Division**: Manage uncertainties in product and ratio calculations with `Prodotto_Fisica` and `Divisione_Fisica`.
+  - **Power & Root**: Raise physical quantities to a power using `Potenza_Fisica`, or calculate the n-th root with `Radice_Fisica`, both with precise uncertainty handling.
 
 ---
 
 ### **3. Advanced Mathematical Functions**
-Solve challenging mathematical problems with ease:
+Solve complex mathematical problems with ease:
+
 - **Quadratic Equation Solver (`Formula_Quadratica`)**:
-  - Solve quadratic equations \( Ax^2 + Bx + C = 0 \), returning both solutions (if they exist).
-- **Fibonacci Sequence (`Fibonacci_Numero`)**:
-  - Compute the \( n \)-th Fibonacci number efficiently.
-- **Root Calculation (`Radice`)**:
-  - Compute the n-th root of a number using Newton’s method, ensuring high precision.
+  - Solve quadratic equations of the form \( Ax^2 + Bx + C = 0 \), returning both solutions (if they exist).
+
+  **`Soluzioni_Quadratica` Structure**:
+  - The structure that holds the solutions for a quadratic equation:
+    - `Soluzione_Più`: The positive solution (root).
+    - `Soluzione_Meno`: The negative solution (root).
+
+- **Fibonacci Sequence (`Fibonacci_Numero`)**: 
+  - Efficiently calculate the \( n \)-th Fibonacci number.
+
+- **Root Calculation (`Radice`)**: 
+  - Use Newton's method to compute the n-th root of a number with high precision.
+
+- **Power Calculation (`Potenza`)**: 
+  - Raise a number to any integer exponent. Handles both positive and negative exponents, returning the computed value.
 
 ---
 
 ### **4. Utility Functions**
-Simplify your workflows with utility features:
-- **String Conversion (`UniformaString`)**:
-  - Normalize strings to lowercase for easier comparisons.
-- **Logging with Timestamps (`Logging`)**:
-  - Create detailed logs with timestamps for debugging and tracking program behavior. Logs are written to both the console and a file.
+Streamline your workflows with these utility features:
+
+- **String Conversion (`UniformaString`)**: 
+  - Convert strings to lowercase for easier comparisons and uniformity.
+
+- **Logging with Timestamps (`Logging`)**: 
+  - Log detailed messages with timestamps for debugging and tracking program behavior. Logs are written to both the console and a file.
 
 ---
 
-### **Include the Library**
-Include Michele.h in your project:
+### **How to Include the Library**
+
+To use the **Michele.h** library, include it in your project with the following directive:
 
 ```c
 #include "Michele.h"
 ```
+
+To view a set of **Tests** for the various applications, they can be seen in the Tests folder.
 
 ---
 

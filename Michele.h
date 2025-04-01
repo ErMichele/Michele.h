@@ -55,12 +55,25 @@ struct Soluzioni_Quadratica {
 // Advanced Mathematical Operations
 // =====================================================================================
 
-double Potenza (double numero, int esponente) {
+/**
+ * @brief Computes the power of a number raised to a specified exponent.
+ * 
+ * @param numero The base number.
+ * @param esponente The exponent to raise the base number to.
+ * 
+ * @return double The result of the base number raised to the exponent.
+ */
+double Potenza(double numero, int esponente) {
     double risultato = 1;
     if (esponente > 0) {
-        for (int i = 1; i < esponente; i++) {
+        for (int i = 1; i <= esponente; i++) {
             risultato *= numero;
         }
+    } else if (esponente < 0) {
+        for (int i = -1; i >= esponente; i--) {
+            risultato *= numero;
+        }
+        risultato = 1 / risultato;
     }
     return risultato;
 }
@@ -103,7 +116,7 @@ double Radice(double numero, int indice, double tolleranza) {
  * @param A The quadratic coefficient (must be non-zero).
  * @param B The linear coefficient.
  * @param C The constant term.
- * @return struct Soluzioni A structure containing the two solutions
+ * @return struct Soluzioni A structure containing the two solutions.
  */
 struct Soluzioni_Quadratica Formula_Quadratica (double A, double B, double C) {
     struct Soluzioni_Quadratica Risultati;
@@ -154,9 +167,9 @@ int Fibonacci_Numero(int n) {
 /**
  * @brief Adds two physical quantities, considering their uncertainties.
  * 
- * @param Grandezza_1 First physical quantity
- * @param Grandezza_2 Second physical quantity
- * @return struct Grandezza_Fisica Resulting physical quantity from the sum
+ * @param Grandezza_1 First physical quantity.
+ * @param Grandezza_2 Second physical quantity.
+ * @return struct Grandezza_Fisica Resulting physical quantity from the sum.
  */
 struct Grandezza_Fisica Somma_Fisica(struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
     struct Grandezza_Fisica Grandezza_Risultato;
@@ -168,9 +181,9 @@ struct Grandezza_Fisica Somma_Fisica(struct Grandezza_Fisica Grandezza_1, struct
 /**
  * @brief Subtracts two physical quantities, considering their uncertainties.
  * 
- * @param Grandezza_1 First physical quantity
- * @param Grandezza_2 Second physical quantity
- * @return struct Grandezza_Fisica Resulting physical quantity from the subtraction
+ * @param Grandezza_1 First physical quantity.
+ * @param Grandezza_2 Second physical quantity.
+ * @return struct Grandezza_Fisica Resulting physical quantity from the subtraction.
  */
 struct Grandezza_Fisica Differenza_Fisica(struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
     struct Grandezza_Fisica Grandezza_Risultato;
@@ -182,9 +195,9 @@ struct Grandezza_Fisica Differenza_Fisica(struct Grandezza_Fisica Grandezza_1, s
 /**
  * @brief Multiplies two physical quantities, considering their uncertainties.
  * 
- * @param Grandezza_1 First physical quantity
- * @param Grandezza_2 Second physical quantity
- * @return struct Grandezza_Fisica Resulting physical quantity from the multiplication
+ * @param Grandezza_1 First physical quantity.
+ * @param Grandezza_2 Second physical quantity.
+ * @return struct Grandezza_Fisica Resulting physical quantity from the multiplication.
  */
 struct Grandezza_Fisica Prodotto_Fisica(struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
     struct Grandezza_Fisica Grandezza_Risultato;
@@ -196,9 +209,9 @@ struct Grandezza_Fisica Prodotto_Fisica(struct Grandezza_Fisica Grandezza_1, str
 /**
  * @brief Divides two physical quantities, considering their uncertainties.
  * 
- * @param Grandezza_1 First physical quantity
- * @param Grandezza_2 Second physical quantity
- * @return struct Grandezza_Fisica Resulting physical quantity from the division
+ * @param Grandezza_1 First physical quantity.
+ * @param Grandezza_2 Second physical quantity.
+ * @return struct Grandezza_Fisica Resulting physical quantity from the division.
  */
 struct Grandezza_Fisica Divisione_Fisica(struct Grandezza_Fisica Grandezza_1, struct Grandezza_Fisica Grandezza_2) {
     struct Grandezza_Fisica Grandezza_Risultato;
@@ -216,14 +229,16 @@ struct Grandezza_Fisica Divisione_Fisica(struct Grandezza_Fisica Grandezza_1, st
  */
 struct Grandezza_Fisica Potenza_Fisica(struct Grandezza_Fisica Grandezza, int Esponente) {
     struct Grandezza_Fisica Grandezza_Risultato = Grandezza;
-    if (Esponente > 0) {
-        for (int i = 1; i < Esponente; i++) {
-            Grandezza_Risultato.Valore *= Grandezza.Valore;
-            Grandezza_Risultato.Incertezza = Grandezza_Risultato.Valore * ((Grandezza.Incertezza / Grandezza.Valore) + (Grandezza.Incertezza / Grandezza.Valore));
-        }
-    } else if (Esponente == 0) {
+    if (Esponente == 0) {
         Grandezza_Risultato.Valore = 1;
         Grandezza_Risultato.Incertezza = 0;
+    } else {
+        Grandezza_Risultato.Valore = Potenza(Grandezza.Valore, Esponente);
+        if (Esponente != 1) {
+            Grandezza_Risultato.Incertezza = Grandezza_Risultato.Valore * (Esponente * (Grandezza.Incertezza / Grandezza.Valore));
+        } else {
+            Grandezza_Risultato.Incertezza = Grandezza.Incertezza;
+        }
     }
     return Grandezza_Risultato;
 }
