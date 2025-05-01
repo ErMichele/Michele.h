@@ -52,6 +52,36 @@ struct Soluzioni_Quadratica {
 };
 
 // =====================================================================================
+// Physical Costants
+// =====================================================================================
+
+#define Pi 3.14159265358979
+
+// =====================================================================================
+// Physical Quantities Conversion
+// =====================================================================================
+
+/**
+ * @brief Converts degrees to radians.
+ * 
+ * @param n Angle in degrees.
+ * @return double Angle in radians.
+ */
+double Gradi_Radiente (double n) {
+    return (Pi * n) / 180;
+}
+
+/**
+ * @brief Converts radians to degrees.
+ * 
+ * @param n Angle in radians.
+ * @return double Angle in degrees.
+ */
+double Radiente_Gradi (double n) {
+    return (180 * n) / Pi;
+}
+
+// =====================================================================================
 // Advanced Mathematical Operations
 // =====================================================================================
 
@@ -158,6 +188,63 @@ int Fibonacci_Numero(int n) {
     }
 
     return Risultato;
+}
+
+/**
+ * @brief Computes the factorial of a non-negative integer.
+ * 
+ * @param n The integer whose factorial is to be calculated.
+ * @return unsigned long long The factorial of the input integer.
+ */
+unsigned long long Fattoriale(int n) {
+    if (n == 0 || n == 1) return 1;
+    return n * Fattoriale(n - 1);
+}
+
+/**
+ * @brief Computes the sine of an angle (in radians) using the Taylor series.
+ * 
+ * @param angolo Angle in radians.
+ * @return double The calculated value of the sine.
+ */
+double Sen(double angolo) {
+    double risultato = 0.0;
+    for (int i = 0; i < 10; i++) { 
+        int segno = (i % 2 == 0) ? 1 : -1;
+        risultato += segno * Potenza(angolo, 2 * i + 1) / Fattoriale(2 * i + 1);
+    }
+    return risultato;
+}
+
+/**
+ * @brief Computes the cosine of an angle (in radians) using the Taylor series.
+ * 
+ * @param angolo Angle in radians.
+ * @return double The calculated value of the cosine.
+ */
+double Cos(double angolo) {
+    double risultato = 0.0;
+    for (int i = 0; i < 10; i++) {
+        int segno = (i % 2 == 0) ? 1 : -1;
+        risultato += segno * Potenza(angolo, 2 * i) / Fattoriale(2 * i);
+    }
+    return risultato;
+}
+
+/**
+ * @brief Computes the tangent of an angle (in radians).
+ * 
+ * @param angolo Angle in radians.
+ * @return double The calculated value of the tangent.
+ */
+double Tan(double angolo, char Unità) {
+    double seno = Sen(angolo);
+    double coseno = Cos(angolo);
+    if (angolo <= 0) {
+        printf("Errore: l'angolo deve essere un numero positivo.\n");
+        return -1;
+    }
+    return seno / coseno;
 }
 
 // =====================================================================================
@@ -286,13 +373,23 @@ void Logging(const char *Tipo, const char *Messaggio, ...) {
     struct tm *local_time = localtime(&now);
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", local_time);
 
-    // Aprire il file di log in modalità append
-    FILE *log_file = fopen("logs.log", "a");
+    // Define the log file path
+    const char *logFilePath = "./Logs/log.log";  // Uses relative path
+
+    // Open the log file in append mode
+    FILE *log_file = fopen(logFilePath, "a");
     if (!log_file) {
-        // Prova ad aprire il file in modalità scrittura se non esiste
-        log_file = fopen("logs.log", "w");
+        // Try creating the directory if it doesn't exist
+        #ifdef _WIN32
+            _mkdir("./Logs");
+        #else
+            mkdir("./Logs", 0777);
+        #endif
+
+        // Attempt to open the file again
+        log_file = fopen(logFilePath, "a");
         if (!log_file) {
-            printf("Errore nell'apertura del file di log");
+            printf("Errore nell'apertura del file di log\n");
             return;
         }
     }
