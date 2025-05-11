@@ -1,7 +1,19 @@
-/* Test of Utility Functions: UniformaString and Logging.
-This test demonstrates the UniformaString function, which converts a string to lowercase, 
-and the Logging utility, used to log messages with timestamps and types (some examples INFO, DEBUG, WARNING, ERROR). */
-
+/*
+ * Test Program: Utility Functions (UniformaString & Logging)
+ *
+ * Description:
+ * This test demonstrates two utility functions from the Michele library:
+ *
+ * 1. UniformaString:
+ *    Converts a string to all lowercase characters.
+ *
+ * 2. Logging:
+ *    Logs messages to the console and a log file with a timestamp and log level.
+ *    Supported log types include: INFO, DEBUG, WARNING, and ERROR.
+ *
+ * This example shows how to track changes to a variable and generate
+ * log messages of different types for debugging and monitoring.
+ */
 
 #include "../Michele.h"
 

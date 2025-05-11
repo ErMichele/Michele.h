@@ -5,6 +5,9 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
 
 // =====================================================================================
 // Console Text Formatting Macros
@@ -208,13 +211,18 @@ unsigned long long Fattoriale(int n) {
  * @return double The calculated value of the sine.
  */
 double Sen(double angolo) {
+    // Riduzione modulo 2π
+    while (angolo > Pi) angolo -= 2 * Pi;
+    while (angolo < -Pi) angolo += 2 * Pi;
+
     double risultato = 0.0;
-    for (int i = 0; i < 10; i++) { 
+    for (int i = 0; i < 15; i++) {
         int segno = (i % 2 == 0) ? 1 : -1;
         risultato += segno * Potenza(angolo, 2 * i + 1) / Fattoriale(2 * i + 1);
     }
     return risultato;
 }
+
 
 /**
  * @brief Computes the cosine of an angle (in radians) using the Taylor series.
@@ -223,8 +231,12 @@ double Sen(double angolo) {
  * @return double The calculated value of the cosine.
  */
 double Cos(double angolo) {
+    // Riduzione modulo 2π
+    while (angolo > Pi) angolo -= 2 * Pi;
+    while (angolo < -Pi) angolo += 2 * Pi;
+
     double risultato = 0.0;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
         int segno = (i % 2 == 0) ? 1 : -1;
         risultato += segno * Potenza(angolo, 2 * i) / Fattoriale(2 * i);
     }
@@ -237,13 +249,15 @@ double Cos(double angolo) {
  * @param angolo Angle in radians.
  * @return double The calculated value of the tangent.
  */
-double Tan(double angolo, char Unità) {
+double Tan(double angolo) {
     double seno = Sen(angolo);
     double coseno = Cos(angolo);
-    if (angolo <= 0) {
-        printf("Errore: l'angolo deve essere un numero positivo.\n");
+
+    if ((coseno > 0 && coseno < 1e-8) || (coseno < 0 && -coseno < 1e-8)) {
+        printf("Errore: tangente indefinita per angolo = %.6f rad\n", angolo);
         return -1;
     }
+
     return seno / coseno;
 }
 
@@ -373,25 +387,49 @@ void Logging(const char *Tipo, const char *Messaggio, ...) {
     struct tm *local_time = localtime(&now);
     strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", local_time);
 
-    // Define the log file path
-    const char *logFilePath = "./Logs/log.log";  // Uses relative path
+    const char *logDir = "./Logs/";
+    const char *logBase = "log";
+    const char *logExt = ".log";
+    const int maxLines = 1000;
 
-    // Open the log file in append mode
-    FILE *log_file = fopen(logFilePath, "a");
-    if (!log_file) {
-        // Try creating the directory if it doesn't exist
-        #ifdef _WIN32
-            _mkdir("./Logs");
-        #else
-            mkdir("./Logs", 0777);
-        #endif
+    char logFilePath[256];
+    snprintf(logFilePath, sizeof(logFilePath), "%s%s%s", logDir, logBase, logExt);
 
-        // Attempt to open the file again
-        log_file = fopen(logFilePath, "a");
-        if (!log_file) {
-            printf("Errore nell'apertura del file di log\n");
-            return;
+    #ifdef _WIN32
+        mkdir(logDir);
+    #else
+        mkdir(logDir, 0777);
+    #endif
+
+    FILE *log_file = fopen(logFilePath, "r");
+    int lines = 0;
+    char buffer[1024];
+
+    if (log_file) {
+        while (fgets(buffer, sizeof(buffer), log_file)) {
+            lines++;
         }
+        fclose(log_file);
+    }
+
+    if (lines >= maxLines) {
+        char old_name[256], new_name[256];
+
+        for (int i = 9; i >= 1; i--) {
+            snprintf(old_name, sizeof(old_name), "%s%s%d%s", logDir, logBase, i, logExt);
+            snprintf(new_name, sizeof(new_name), "%s%s%d%s", logDir, logBase, i + 1, logExt);
+            rename(old_name, new_name);
+        }
+
+        snprintf(old_name, sizeof(old_name), "%s%s%s", logDir, logBase, logExt);
+        snprintf(new_name, sizeof(new_name), "%s%s1%s", logDir, logBase, logExt);
+        rename(old_name, new_name);
+    }
+
+    log_file = fopen(logFilePath, "a");
+    if (!log_file) {
+        printf("Errore nell'apertura del file di log\n");
+        return;
     }
 
     va_list args;
@@ -403,6 +441,11 @@ void Logging(const char *Tipo, const char *Messaggio, ...) {
 
     fprintf(log_file, "<%s> [%s] ", timestamp, Tipo);
     vfprintf(log_file, Messaggio, args);
+
+    if (strcmp(Tipo, "CLOSE") == 0) {
+        fprintf(log_file, "\n\n-----------------------------------------------------------------------------------------------------------\n");
+    }
+
     fprintf(log_file, "\n");
 
     va_end(args);

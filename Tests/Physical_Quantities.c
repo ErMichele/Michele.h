@@ -1,7 +1,20 @@
-/* Test to verify the functionalities of mathematical operations on physical quantities.
- * The code creates three physical quantities with predefined values and uncertainties.
- * It performs various operations (sum, subtraction, multiplication, division, power, and root).
- * The results, including values and uncertainties, are printed in a readable format to the terminal.
+/*
+ * Test Program: Mathematical Operations on Physical Quantities
+ *
+ * Description:
+ * This test demonstrates the use of mathematical functions that operate on physical quantities,
+ * taking both values and uncertainties into account.
+ *
+ * It defines three physical quantities with preset values and uncertainties, then performs:
+ *   1. Addition
+ *   2. Subtraction
+ *   3. Multiplication
+ *   4. Division
+ *   5. Exponentiation
+ *   6. Root extraction
+ *
+ * Each operation returns a new physical quantity with a calculated value and propagated uncertainty,
+ * which are printed in a readable format for validation.
  */
 
 #include "../Michele.h"

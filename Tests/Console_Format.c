@@ -1,7 +1,17 @@
-/* Test to validate the Console Text Formatting Macros functionality.
-This code demonstrates the use of macros to customize console text appearance.
-It prints "Hello, test!" to the terminal with the text color set to blue, 
-a green background, and bold formatting applied for enhanced readability. */
+/*
+ * Test Program: Console Text Formatting Macros
+ *
+ * Description:
+ * This test demonstrates the use of ANSI escape code macros from the Michele library
+ * to customize the appearance of text in the terminal.
+ *
+ * Specifically, it prints the message "Hello, test!" using:
+ *   - Blue text color
+ *   - Green background
+ *   - Bold formatting
+ *
+ * The RESET macro is used at the end to restore the default console style.
+ */
 
 #include "../Michele.h"
 
