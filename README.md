@@ -1,7 +1,3 @@
-Sure! Here’s the updated **README** combining both parts of the mathematical functions:
-
----
-
 # Michele.h Library Documentation
 
 **Michele.h** is a powerful and flexible library designed for C programming. It simplifies advanced computations, enhances console output, and facilitates operations with physical quantities. With its clear and efficient design, **Michele.h** is an essential tool for scientific applications, mathematical explorations, and general-purpose programming.
